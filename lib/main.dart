@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: VideoCapture(),
+      home: const VideoCapture(),
     );
   }
 }
@@ -41,9 +41,6 @@ class _VideoCaptureState extends State<VideoCapture> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Flutter Video Capture"),
-      ),
       body: Center(child: _previewVideo()),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -57,9 +54,9 @@ class _VideoCaptureState extends State<VideoCapture> {
                   maxDuration: const Duration(seconds: 10));
               setState(() {});
               _playVideo(file);
-              print("Video Path ${file!.path}");
+              ("Video Path ${file!.path}");
             },
-            child: Icon(Icons.video_call_rounded, color: Colors.black),
+            child: const Icon(Icons.video_call_rounded, color: Colors.black),
           ),
           FloatingActionButton(
             elevation: 0,
@@ -71,8 +68,8 @@ class _VideoCaptureState extends State<VideoCapture> {
               });
             },
             child: !playing
-                ? Icon(Icons.play_arrow, color: Colors.black)
-                : Icon(Icons.pause, color: Colors.black),
+                ? const Icon(Icons.play_arrow, color: Colors.black)
+                : const Icon(Icons.pause, color: Colors.black),
           ),
           FloatingActionButton(
               elevation: 0,
@@ -86,11 +83,11 @@ class _VideoCaptureState extends State<VideoCapture> {
                 });
               },
               child: !muted
-                  ? Icon(
+                  ? const Icon(
                       Icons.volume_up,
                       color: Colors.black,
                     )
-                  : Icon(Icons.volume_mute, color: Colors.black)),
+                  : const Icon(Icons.volume_mute, color: Colors.black)),
         ],
       ),
     );
@@ -112,7 +109,6 @@ class _VideoCaptureState extends State<VideoCapture> {
 
   Future<void> _playVideo(XFile? file) async {
     if (file != null && mounted) {
-      print("Loading Video");
       await _disposeVideoController();
       late VideoPlayerController controller;
       controller = VideoPlayerController.file(File(file.path));
@@ -122,7 +118,10 @@ class _VideoCaptureState extends State<VideoCapture> {
       await controller.setLooping(true);
       setState(() {});
     } else {
-      print("Loading Video error");
+      const ScaffoldMessenger(
+          child: AlertDialog(
+        title: Text('Error Loading Video'),
+      ));
     }
   }
 
