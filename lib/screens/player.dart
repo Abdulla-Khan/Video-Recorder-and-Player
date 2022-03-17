@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class Player extends StatefulWidget {
-  Player({Key? key, required this.path}) : super(key: key);
-  File path;
+  const Player({Key? key, required this.path}) : super(key: key);
+  final File path;
   @override
   State<Player> createState() => _PlayerState();
 }
@@ -18,11 +18,11 @@ class _PlayerState extends State<Player> {
     super.initState();
     _controller = VideoPlayerController.file(widget.path)
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
   }
 
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Video Demo',
