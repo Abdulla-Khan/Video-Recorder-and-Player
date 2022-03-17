@@ -26,6 +26,8 @@ class MyApp extends StatelessWidget {
 }
 
 class VideoCapture extends StatefulWidget {
+  const VideoCapture({Key? key}) : super(key: key);
+
   @override
   State<VideoCapture> createState() => _VideoCaptureState();
 }
@@ -113,19 +115,9 @@ class _VideoCaptureState extends State<VideoCapture> {
       print("Loading Video");
       await _disposeVideoController();
       late VideoPlayerController controller;
-      /*if (kIsWeb) {
-        controller = VideoPlayerController.network(file.path);
-      } else {*/
       controller = VideoPlayerController.file(File(file.path));
-      //}
       _controller = controller;
-      // In web, most browsers won't honor a programmatic call to .play
-      // if the video has a sound track (and is not muted).
-      // Mute the video so it auto-plays in web!
-      // This is not needed if the call to .play is the result of user
-      // interaction (clicking on a "play" button, for example).
 
-      //await controller.setVolume(volume);
       await controller.initialize();
       await controller.setLooping(true);
       setState(() {});
@@ -135,16 +127,12 @@ class _VideoCaptureState extends State<VideoCapture> {
   }
 
   Future<void> _disposeVideoController() async {
-    /*  if (_toBeDisposed != null) {
-      await _toBeDisposed!.dispose();
-    }
-    _toBeDisposed = _controller;*/
     _controller = null;
   }
 }
 
 class AspectRatioVideo extends StatefulWidget {
-  AspectRatioVideo(this.controller);
+  const AspectRatioVideo(this.controller, {Key? key}) : super(key: key);
 
   final VideoPlayerController? controller;
 
