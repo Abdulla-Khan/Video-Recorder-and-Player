@@ -30,7 +30,7 @@ class _VideoCaptureState extends State<VideoCapture> {
             onPressed: () async {
               final XFile? file = await _picker.pickVideo(
                   source: ImageSource.camera,
-                  maxDuration: const Duration(seconds: 10));
+                  maxDuration: const Duration(minutes: 10));
               setState(() {});
               _playVideo(file);
               ("Video Path ${file!.path}");
