@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
@@ -37,36 +38,6 @@ class _VideoCaptureState extends State<VideoCapture> {
             },
             child: const Icon(Icons.video_call_rounded, color: Colors.black),
           ),
-          FloatingActionButton(
-            elevation: 0,
-            backgroundColor: Colors.white,
-            onPressed: () async {
-              setState(() {
-                playing = !playing;
-                !playing ? _controller!.pause() : _controller!.play();
-              });
-            },
-            child: !playing
-                ? const Icon(Icons.play_arrow, color: Colors.black)
-                : const Icon(Icons.pause, color: Colors.black),
-          ),
-          FloatingActionButton(
-              elevation: 0,
-              backgroundColor: Colors.white,
-              onPressed: () async {
-                setState(() {
-                  muted = !muted;
-                  muted
-                      ? _controller!.setVolume(0)
-                      : _controller!.setVolume(100);
-                });
-              },
-              child: !muted
-                  ? const Icon(
-                      Icons.volume_up,
-                      color: Colors.black,
-                    )
-                  : const Icon(Icons.volume_mute, color: Colors.black)),
         ],
       ),
     );
@@ -150,7 +121,10 @@ class AspectRatioVideoState extends State<AspectRatioVideo> {
       return Center(
         child: AspectRatio(
           aspectRatio: controller!.value.aspectRatio,
-          child: VideoPlayer(controller!),
+          child: Chewie(
+              controller: ChewieController(
+            videoPlayerController: controller!,
+          )),
         ),
       );
     } else {
